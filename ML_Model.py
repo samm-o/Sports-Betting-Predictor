@@ -1,8 +1,7 @@
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
-from sklearn.model_selection import GridSearchCV
-from sklearn.model_selection import train_test_split
-from Encoding import training_data, training_labels
+from sklearn.model_selection import GridSearchCV, train_test_split
+from Encoding import training_data, training_labels, upcoming_encoded_final
 
 # Exclude rows with NaN values from the training data and labels
 training_data_cleaned = training_data.dropna()
@@ -54,3 +53,44 @@ print(f'Best cross-validation score for Random Forest: {grid_search_rf.best_scor
 
 print(f'Best parameters for Gradient Boosting: {grid_search_gb.best_params_}')
 print(f'Best cross-validation score for Gradient Boosting: {grid_search_gb.best_score_}')
+
+# Extract the best parameters from the grid search
+best_params_logreg = grid_search_logreg.best_params_
+best_params_rf = grid_search_rf.best_params_
+best_params_gb = grid_search_gb.best_params_
+
+# Train the models using the best parameters
+logreg_best = LogisticRegression(**best_params_logreg)
+rf_best = RandomForestClassifier(**best_params_rf)
+gb_best = GradientBoostingClassifier(**best_params_gb)
+
+logreg_best.fit(training_data_cleaned, training_labels_cleaned)
+rf_best.fit(training_data_cleaned, training_labels_cleaned)
+gb_best.fit(training_data_cleaned, training_labels_cleaned)
+
+# Make predictions for the upcoming games
+upcoming_features = upcoming_encoded_final[[col for col in upcoming_encoded_final.columns if 'Diff_' in col]]
+
+logreg_probabilities = logreg_best.predict_proba(upcoming_features)[:, 1]
+rf_probabilities = rf_best.predict_proba(upcoming_features)[:, 1]
+gb_probabilities = gb_best.predict_proba(upcoming_features)[:, 1]
+
+# Add the predictions to the upcoming games dataframe using .loc to avoid SettingWithCopyWarning
+upcoming_encoded_final.loc[:, 'LogReg_HomeWinProbability'] = logreg_probabilities
+upcoming_encoded_final.loc[:, 'RF_HomeWinProbability'] = rf_probabilities
+upcoming_encoded_final.loc[:, 'GB_HomeWinProbability'] = gb_probabilities
+
+# Save the predictions to CSV files without sorting
+upcoming_encoded_final[['Home', 'Visitor', 'LogReg_HomeWinProbability']].to_csv('upcoming_predictions_logreg.csv', index=False)
+upcoming_encoded_final[['Home', 'Visitor', 'RF_HomeWinProbability']].to_csv('upcoming_predictions_rf.csv', index=False)
+upcoming_encoded_final[['Home', 'Visitor', 'GB_HomeWinProbability']].to_csv('upcoming_predictions_gb.csv', index=False)
+
+# Print the predictions
+print("Upcoming Predictions using Logistic Regression:")
+print(upcoming_encoded_final[['Home', 'Visitor', 'LogReg_HomeWinProbability']])
+
+print("Upcoming Predictions using Random Forest:")
+print(upcoming_encoded_final[['Home', 'Visitor', 'RF_HomeWinProbability']])
+
+print("Upcoming Predictions using Gradient Boosting:")
+print(upcoming_encoded_final[['Home', 'Visitor', 'GB_HomeWinProbability']])
