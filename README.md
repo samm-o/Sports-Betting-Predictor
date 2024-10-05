@@ -50,6 +50,7 @@ The web application is built using React and Flask. The following files are used
 
 ![image](https://github.com/user-attachments/assets/76c50fe5-3c22-48ca-8eac-adb3cdb11171)
 
+
 ## Installation
 
 To install and run the project locally, follow these steps:
