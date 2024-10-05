@@ -1,0 +1,28 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #282c34;
+  padding: 20px;
+  color: white;
+}
+
+.matchup-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.matchup {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 16px;
+  width: 300px;
+  text-align: left;
+}
+
+.scores p {
+  margin: 4px 0;
+}

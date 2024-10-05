@@ -1,0 +1,33 @@
+from flask import Flask, jsonify
+from flask_cors import CORS
+import pandas as pd
+
+app = Flask(__name__)
+CORS(app)
+
+@app.route('/api/matchups', methods=['GET'])
+def get_matchups():
+    # Load and merge data as shown in the previous steps
+    file_path_rf = './Prediction Data/upcoming_predictions_rf.csv'
+    file_path_gb = './Prediction Data/upcoming_predictions_gb.csv'
+    file_path_logreg = './Prediction Data/upcoming_predictions_logreg.csv'
+
+    df_rf = pd.read_csv(file_path_rf)
+    df_gb = pd.read_csv(file_path_gb)
+    df_logreg = pd.read_csv(file_path_logreg)
+
+    df_rf = df_rf[['Home', 'Visitor', 'RF_HomeWinProbability']]
+    df_gb = df_gb[['Home', 'Visitor', 'GB_HomeWinProbability']]
+    df_logreg = df_logreg[['Home', 'Visitor', 'LogReg_HomeWinProbability']]
+
+    merged_df = df_rf.merge(df_gb, on=['Home', 'Visitor']).merge(df_logreg, on=['Home', 'Visitor'])
+
+    # Format the probability values to 2 decimal places
+    merged_df['RF_HomeWinProbability'] = merged_df['RF_HomeWinProbability'].apply(lambda x: round(x * 100, 2))
+    merged_df['GB_HomeWinProbability'] = merged_df['GB_HomeWinProbability'].apply(lambda x: round(x * 100, 2))
+    merged_df['LogReg_HomeWinProbability'] = merged_df['LogReg_HomeWinProbability'].apply(lambda x: round(x * 100, 2))
+
+    return jsonify(merged_df.to_dict(orient='records'))
+
+if __name__ == '__main__':
+    app.run(debug=True)
