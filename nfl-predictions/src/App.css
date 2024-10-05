@@ -1,28 +1,32 @@
+/* App.css */
 .App {
   text-align: center;
+  font-family: 'Roboto', sans-serif;
+  background-color: #1e1e1e;
+  color: #ffffff;
 }
 
 .App-header {
   background-color: #282c34;
   padding: 20px;
   color: white;
+  border-bottom: 4px solid #ffcc00;
 }
 
 .matchup-list {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  padding: 20px;
 }
 
-.matchup {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 16px;
-  margin: 16px;
-  width: 300px;
-  text-align: left;
+.week-section {
+  margin-bottom: 32px;
 }
 
-.scores p {
-  margin: 4px 0;
+.week-section h2 {
+  text-align: center;
+  margin-bottom: 16px;
+  color: #ffcc00;
+  font-size: 1.5rem;
 }

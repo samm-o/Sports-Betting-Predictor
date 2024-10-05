@@ -1,13 +1,33 @@
+/* Matchup.css */
 .matchup {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 16px;
-    margin: 16px;
-    width: 300px;
-    text-align: left;
-    background-color: white;
-  }
-  
-  .scores p {
-    margin: 4px 0;
-  }
+  border: 1px solid #ffcc00;
+  border-radius: 8px;
+  padding: 12px;
+  margin: 12px;
+  width: 250px;
+  text-align: left;
+  background-color: #333333;
+  color: #ffffff;
+  position: relative;
+}
+
+.matchup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.football-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.matchup h2 {
+  font-size: 1.2rem;
+  margin: 0 8px;
+}
+
+.scores p {
+  margin: 4px 0;
+  font-size: 0.9rem;
+}
