@@ -11,8 +11,6 @@ Welcome to the NFL 2024 Moneyline Predictions project! This project aims to pred
 - [Web Application](#web-application)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Overview
 
@@ -50,7 +48,7 @@ The web application is built using React and Flask. The following files are used
 
 ### Screenshots
 
-![Screenshot](nfl-predictions\public\image.png)
+![image](https://github.com/user-attachments/assets/76c50fe5-3c22-48ca-8eac-adb3cdb11171)
 
 ## Installation
 
@@ -67,3 +65,7 @@ To install and run the project locally, follow these steps:
     ```sh
     python app.py
     npm start
+
+## Usage
+
+Once the servers are running, open your browser and navigate to http://localhost:3000 to view the web application. You can browse through the weekly matchups and view the confidence scores for each game.
