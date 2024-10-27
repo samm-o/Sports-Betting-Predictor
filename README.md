@@ -64,7 +64,7 @@ To install and run the project locally, follow these steps:
     npm install
 3. Start the flask backend server -> Start the React development server
     ```sh
-    python app.py
+    python ConfidenceScores.py
     npm start
 
 ## Usage
